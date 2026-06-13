@@ -46,3 +46,37 @@ headers.forEach((header) => {
         }
     });
 });
+
+const tabButtons = document.querySelectorAll(".tab-btn");
+const tabContents = document.querySelectorAll(".tab-content");
+
+tabButtons.forEach((button) => {
+    button.addEventListener("click", () => {
+        tabButtons.forEach((btn) => {
+            btn.classList.remove("active");
+        });
+        tabContents.forEach((content) => {
+            content.classList.remove("active");
+        });
+
+        button.classList.add("active");
+
+        const tabId = button.getAttribute("data-tab");
+        const targetContent = document.getElementById(tabId);
+        targetContent.classList.add("active");
+    });
+});
+
+const tooltips = document.querySelectorAll(".tooltip");
+
+tooltips.forEach((tooltip) => {
+    const text = tooltip.querySelector(".tooltip-text");
+
+    tooltip.addEventListener("mouseenter", () => {
+        text.style.display = "block";
+    });
+
+    tooltip.addEventListener("mouseleave", () => {
+        text.style.display = "none";
+    });
+});
