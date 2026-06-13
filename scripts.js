@@ -73,10 +73,64 @@ tooltips.forEach((tooltip) => {
     const text = tooltip.querySelector(".tooltip-text");
 
     tooltip.addEventListener("mouseenter", () => {
-        text.style.display = "block";
+        text.style.visibility = "visible";
+        text.style.opacity = "1";
     });
 
     tooltip.addEventListener("mouseleave", () => {
-        text.style.display = "none";
+        text.style.visibility = "hidden";
+        text.style.opacity = "0";
     });
 });
+
+const slider = document.querySelector(".slider");
+const slides = document.querySelectorAll(".slide");
+const leftArrow = document.querySelector(".slider-arrow-left");
+const rightArrow = document.querySelector(".slider-arrow-right");
+const dots = document.querySelectorAll(".slider-dot");
+
+let currentSlide = 0;
+
+function updateSlider() {
+    slider.style.transform = `translateX(-${currentSlide * 100}%)`;
+    dots.forEach((dot) => {
+        dot.classList.remove("active");
+    });
+
+    dots[currentSlide].classList.add("active");
+
+    if (currentSlide === 0) {
+        leftArrow.classList.add("disabled");
+    } else {
+        leftArrow.classList.remove("disabled");
+    }
+
+    if (currentSlide === slides.length - 1) {
+        rightArrow.classList.add("disabled");
+    } else {
+        rightArrow.classList.remove("disabled");
+    }
+}
+
+rightArrow.addEventListener("click", () => {
+    if (currentSlide < slides.length - 1) {
+        currentSlide++;
+        updateSlider();
+    }
+});
+
+leftArrow.addEventListener("click", () => {
+    if (currentSlide > 0) {
+        currentSlide--;
+        updateSlider();
+    }
+});
+
+dots.forEach((dot, index) => {
+    dot.addEventListener("click", () => {
+        currentSlide = index;
+        updateSlider();
+    });
+});
+
+updateSlider();
